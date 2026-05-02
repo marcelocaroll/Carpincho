@@ -255,12 +255,12 @@ const COLORES=[
   {cod:"135",nom:"Blanco",hex:"#f2f2ef"},
   {cod:"107",nom:"Gris",hex:"#9e9e9e"},
   {cod:"303",nom:"Negro",hex:"#2b2b2b"},
-  {cod:"240",nom:"Wengué",hex:"#4a2e1a"}
+  {cod:"240",nom:"Wengu\u00E9",hex:"#4a2e1a"}
 ];
 let uid=0,mods={},res=[],sec="puertas",sbOpen=true;
 const TIT={
-  puertas:{t:"Puertas",s:"Calculá medidas de hojas"},
-  cajones:{t:"Cajones",s:"Calculá medidas de frentes"},
+  puertas:{t:"Puertas",s:"Calcul\u00E1 medidas de hojas"},
+  cajones:{t:"Cajones",s:"Calcul\u00E1 medidas de frentes"},
   resumen:{t:"Resumen",s:"Lista de cortes guardados"}
 };
 
@@ -312,7 +312,7 @@ function aM(tipo){
 uid++;var id=uid;
 // Contar cuántos módulos de este tipo ya existen (activos)
 var contTipo=Object.values(mods).filter(function(m){return m.tipo===tipo}).length+1;
-var nombreBase=tipo===“puerta”?“Puerta “:“Cajón “;
+var nombreBase=tipo===“puerta”?“Puerta “:“Caj\u00F3n “;
 mods[id]={id:id,tipo:tipo,nombre:nombreBase+contTipo,calc:null,guardado:false};
 var c=document.getElementById(“cont-”+tipo+“s”);
 var d=document.createElement(“div”);
@@ -497,7 +497,7 @@ document.querySelectorAll(”.cb”).forEach(function(b){b.classList.remove(“o
 }
 document.addEventListener(“click”,function(e){if(!e.target.closest(”.cw”))cAD()});
 function sC(id,cod,nom,hex){
-document.getElementById(“ccolor”+id).value=cod+” – “+nom;
+document.getElementById(“ccolor”+id).value=cod+” \u2013 “+nom;
 document.getElementById(“cbc”+id).style.background=hex;
 document.getElementById(“cbl”+id).textContent=nom;
 document.querySelectorAll(”[id^=‘co-”+id+”-’]”).forEach(function(o){o.classList.remove(“sl”)});
@@ -510,7 +510,7 @@ function rCaj(id){
 var c=document.getElementById(“fc”+id);if(!c)return;c.innerHTML=””;
 (mods[id].cajones||[]).forEach(function(x,i){
 var d=document.createElement(“div”);d.className=“cr”;
-d.innerHTML=’<label>Cajón ‘+(i+1)+’</label>’
+d.innerHTML=’<label>Caj\u00F3n ‘+(i+1)+’</label>’
 +’<div class="cu" style="flex:1">’
 +’<input type=“number” id=“ch’+id+’-’+x.cid+’” value=”’+x.alto+’” placeholder=“0” min=“0” step=“0.1”’
 +’ oninput=“sCH(’+id+’,’+x.cid+’,this.value)” style=“padding-right:28px”>’
@@ -539,14 +539,14 @@ if((aw!==null&&aw<=0)||(ah!==null&&ah<=0)){
 d.innerHTML=’<div class="rb e"><div class="rbt" style="color:var(--re)">⚠ Luces superan el espacio</div></div>’;
 mods[id].calc=null;return;
 }
-var med=aw&&ah?fm(aw)+” × “+fm(ah)+” cm”:(aw?fm(aw)+” cm ancho”:fm(ah)+” cm alto”);
-var frm=(aw?“A:(”+A+(cols>1?“−”+(cols-1)+“×”+luz:””)+“−2×”+lat+”)÷”+cols+”=”+fm(aw)+”\n”:””)
-+(ah?“H:(”+H+“−”+vsup+“−”+vinf+”)=”+fm(ah):””);
+var med=aw&&ah?fm(aw)+” \u00D7 “+fm(ah)+” cm”:(aw?fm(aw)+” cm ancho”:fm(ah)+” cm alto”);
+var frm=(aw?“A:(”+A+(cols>1?”\u2212”+(cols-1)+”\u00D7”+luz:””)+”\u22122\u00D7”+lat+”)\u00F7”+cols+”=”+fm(aw)+”\n”:””)
++(ah?“H:(”+H+”\u2212”+vsup+”\u2212”+vinf+”)=”+fm(ah):””);
 d.innerHTML=’<div class="rb"><div class="rbt">Medida de corte</div>’
 +’<div class="rbg">’+med+’</div>’
 +’<div class="rbf">’+frm.trim()+’</div>’
 +’<div style="margin-top:6px;display:flex;flex-wrap:wrap;gap:3px">’
-+’<span class="chip">🚪 ‘+cols+’ hoja’+(cols>1?“s”:””)+” × “+reps+’ esp.</span>’
++’<span class="chip">🚪 ‘+cols+’ hoja’+(cols>1?“s”:””)+” \u00D7 “+reps+’ esp.</span>’
 +’<span class="chip">🪵 ‘+mat.charAt(0).toUpperCase()+mat.slice(1)+’</span>’
 +(col?’<span class="chip">🎨 ‘+col+’</span>’:””)
 +’</div></div>’;
@@ -570,16 +570,16 @@ cajones.forEach(function(c,i){
 var h=parseFloat(c.alto)||0;
 if(h>0){
 var ac=h-2*vluz,ok=ac>0;
-rows+=’<div class="rr"><span class="rrl">Cajón ‘+(i+1)+”: “+h+“−2×”+vluz+’</span><span class="rrv">’+(ok?fm(ac)+” cm”:”⚠ Error”)+’</span></div>’;
-if(ok)pzs.push({tipo:“Cajón”,nombre:mods[id].nombre+” – C”+(i+1),ancho:aw!==null?aw:”–”,alto:ac,cant:cols,reps:reps,mat:mat,color:””,colorHex:””});
+rows+=’<div class="rr"><span class="rrl">Caj\u00F3n ‘+(i+1)+”: “+h+”\u22122\u00D7”+vluz+’</span><span class="rrv">’+(ok?fm(ac)+” cm”:”⚠ Error”)+’</span></div>’;
+if(ok)pzs.push({tipo:“Caj\u00F3n”,nombre:mods[id].nombre+” \u2013 C”+(i+1),ancho:aw!==null?aw:”–”,alto:ac,cant:cols,reps:reps,mat:mat,color:””,colorHex:””});
 }
 });
 d.innerHTML=’<div class="rb"><div class="rbt">Medidas de corte</div>’
 +(aw?’<div class="rbg">’+fm(aw)+’ cm ancho</div>’:””)
-+’<div class="rbf">Alto = medida − 2×’+vluz+’ cm</div>’
++’<div class="rbf">Alto = medida \u2212 2\u00D7’+vluz+’ cm</div>’
 +’<div class="rrs">’+rows+’</div>’
 +’<div style="margin-top:6px;display:flex;flex-wrap:wrap;gap:3px">’
-+’<span class="chip">📦 ‘+pzs.length+’ cajón’+(pzs.length!==1?“es”:””)+” × “+reps+’ mód.</span>’
++’<span class="chip">📦 ‘+pzs.length+’ caj\u00F3n’+(pzs.length!==1?“es”:””)+” \u00D7 “+reps+’ m\u00F3d.</span>’
 +’<span class="chip">🪵 ‘+mat.charAt(0).toUpperCase()+mat.slice(1)+’</span>’
 +’</div></div>’;
 mods[id].calc=pzs.length?pzs:null;
@@ -590,7 +590,7 @@ var m=mods[id];if(!m)return;
 var ri=res.findIndex(function(r){return r.modId===id});
 if(ri>=0){
 res[ri].items.forEach(function(p,i){
-p.nombre=m.tipo===“puerta”?m.nombre:(m.nombre+” – C”+(i+1));
+p.nombre=m.tipo===“puerta”?m.nombre:(m.nombre+” \u2013 C”+(i+1));
 });
 }
 rCar();
@@ -643,8 +643,8 @@ else if(cb)cb.classList.remove(“er”);
 function guardar(id){
 var m=mods[id];if(!m||!m.calc)return;
 if(m.tipo===“puerta”){m.calc[0].nombre=m.nombre}
-else{m.calc.forEach(function(p,i){p.nombre=m.nombre+” – C”+(i+1)})}
-var datos={modId:id,tipo:m.tipo===“puerta”?“Puerta”:“Cajón”,items:JSON.parse(JSON.stringify(m.calc))};
+else{m.calc.forEach(function(p,i){p.nombre=m.nombre+” \u2013 C”+(i+1)})}
+var datos={modId:id,tipo:m.tipo===“puerta”?“Puerta”:“Caj\u00F3n”,items:JSON.parse(JSON.stringify(m.calc))};
 var i=res.findIndex(function(r){return r.modId===id});
 if(i>=0)res[i]=datos;else res.push(datos);
 m.guardado=true;
@@ -667,9 +667,9 @@ uSv(modId);
 }
 
 function vaciar(){
-if(!res.length){alert(“El resumen ya está vacío.”);return}
-if(!window.confirm(”¿Segúro que querés borrar el proyecto completo?\n\nEsta acción no se puede deshacer.”))return;
-if(!window.confirm(“✓✓ Última confirmación: ¿Borrar todo el proyecto?”))return;
+if(!res.length){alert(“El resumen ya est\u00E1 vac\u00EDo.”);return}
+if(!window.confirm(”\u00BFSeg\u00FAro que quer\u00E9s borrar el proyecto completo?\n\nEsta acci\u00F3n no se puede deshacer.”))return;
+if(!window.confirm(”\u2713\u2713 \u00DAltima confirmaci\u00F3n: \u00BFBorrar todo el proyecto?”))return;
 res.length=0;
 Object.values(mods).forEach(function(m){m.guardado=false;unlockCard(m.id);uSv(m.id)});
 rCar();renderRes();
@@ -679,7 +679,7 @@ function rCar(){
 var ch=document.getElementById(“cchs”),t=document.getElementById(“cct”),bg=document.getElementById(“nbg”);
 if(!ch)return;
 if(!res.length){
-ch.innerHTML=”<span class='cce'>Guardá cortes para verlos acá →</span>”;
+ch.innerHTML=”<span class='cce'>Guard\u00E1 cortes para verlos ac\u00E1 \u2192</span>”;
 t.style.display=“none”;bg.style.display=“none”;return;
 }
 var tp=res.flatMap(function(r){return r.items}).reduce(function(s,p){return s+(p.cant||1)*(p.reps||1)},0);
@@ -688,12 +688,12 @@ var p=r.items[0];
 var dot=p.colorHex?’<span class="ccd" style="background:'+p.colorHex+'"></span>’:””;
 var lbl;
 if(r.tipo===“Puerta”){
-lbl=(p.ancho!==”–”&&p.alto!==”–”)?fm(p.ancho)+“×”+fm(p.alto):(p.ancho!==”–”?“A:”+fm(p.ancho):“H:”+fm(p.alto));
+lbl=(p.ancho!==”–”&&p.alto!==”–”)?fm(p.ancho)+”\u00D7”+fm(p.alto):(p.ancho!==”–”?“A:”+fm(p.ancho):“H:”+fm(p.alto));
 } else {
-lbl=r.items.length+” cajón”+(r.items.length>1?“es”:””);
+lbl=r.items.length+” caj\u00F3n”+(r.items.length>1?“es”:””);
 }
-var nm=p.nombre.length>13?p.nombre.slice(0,12)+”…”:p.nombre;
-return ‘<span class="cch">’+dot+nm+” · “+lbl+”</span>”;
+var nm=p.nombre.length>13?p.nombre.slice(0,12)+”\u2026”:p.nombre;
+return ‘<span class="cch">’+dot+nm+” \u00B7 “+lbl+”</span>”;
 }).join(””);
 t.textContent=tp+” pz”;t.style.display=“block”;
 bg.textContent=res.length;bg.style.display=“inline-block”;
@@ -702,22 +702,22 @@ bg.textContent=res.length;bg.style.display=“inline-block”;
 function renderRes(){
 var c=document.getElementById(“cont-res”);if(!c)return;
 if(!res.length){
-c.innerHTML=’<div class="emp"><div class="ei">📋</div><p style="font-weight:700;color:#1a2035;margin-bottom:3px">Resumen vacío</p><p>Guardá cortes desde Puertas o Cajones.</p></div>’;
+c.innerHTML=’<div class="emp"><div class="ei">📋</div><p style="font-weight:700;color:#1a2035;margin-bottom:3px">Resumen vac\u00EDo</p><p>Guard\u00E1 cortes desde Puertas o Cajones.</p></div>’;
 return;
 }
 var todos=res.flatMap(function(r){return r.items});
 var tp=todos.reduce(function(s,p){return s+(p.cant||1)*(p.reps||1)},0);
-var pu=res.filter(function(r){return r.tipo===“Puerta”}),ca=res.filter(function(r){return r.tipo===“Cajón”});
+var pu=res.filter(function(r){return r.tipo===“Puerta”}),ca=res.filter(function(r){return r.tipo===“Caj\u00F3n”});
 var html=’<div class="totb"><div><div class="totl">Total del proyecto</div>’
 +’<div class="totn">’+tp+’ <span style="font-size:.82rem;color:rgba(255,255,255,.5);font-weight:600">piezas</span></div></div>’
-+’<div style="text-align:right;font-size:.7rem;color:rgba(255,255,255,.48)">’+pu.length+’ entr. puerta · ‘+ca.length+’ entr. cajón</div></div>’;
++’<div style="text-align:right;font-size:.7rem;color:rgba(255,255,255,.48)">’+pu.length+’ entr. puerta \u00B7 ‘+ca.length+’ entr. caj\u00F3n</div></div>’;
 function grp(lista,tit,ic){
 if(!lista.length)return””;
 var s=’<div class="gl">’+ic+” “+tit+”</div>”;
 var num=1;
 lista.forEach(function(r){
 r.items.forEach(function(p){
-var med=(p.ancho!==”–”&&p.alto!==”–”)?fm(p.ancho)+“×”+fm(p.alto):(p.ancho!==”–”?“A:”+fm(p.ancho):“H:”+fm(p.alto));
+var med=(p.ancho!==”–”&&p.alto!==”–”)?fm(p.ancho)+”\u00D7”+fm(p.alto):(p.ancho!==”–”?“A:”+fm(p.ancho):“H:”+fm(p.alto));
 var mt=p.mat?p.mat.charAt(0).toUpperCase()+p.mat.slice(1):””;
 var dot=p.colorHex?’<span class="rdot" style="background:'+p.colorHex+'"></span>’:””;
 var pz=(p.cant||1)*(p.reps||1);
@@ -725,7 +725,7 @@ s+=’<div class="ri">’
 +’<span class="rin">’+num+’</span>’
 +’<span class="rnm" title="'+p.nombre+'">’+p.nombre+’</span>’
 +’<span class="rmd">’+med+’ cm</span>’
-+’<span class="rmt">’+dot+mt+(p.color?” · “+p.color:””)+’</span>’
++’<span class="rmt">’+dot+mt+(p.color?” \u00B7 “+p.color:””)+’</span>’
 +’<span class="rpz">’+pz+’ pz</span>’
 +’<button class="red" onclick="editarItem('+r.modId+')">✏ Editar</button>’
 +’</div>’;
@@ -741,12 +741,12 @@ c.innerHTML=html;
 function compartir(){
 var titulo=(document.getElementById(“rtit”)?.value||“Resumen de cortes”).trim();
 var todos=res.flatMap(function(r){return r.items});
-if(!todos.length){alert(“El resumen está vacío. Guardá al menos un corte primero.”);return}
+if(!todos.length){alert(“El resumen est\u00E1 vac\u00EDo. Guard\u00E1 al menos un corte primero.”);return}
 var texto=titulo+”\n”+”–”.repeat(16)+”\n\n”;
 todos.forEach(function(p,i){
 var med=(p.ancho!==”–”&&p.alto!==”–”)?fm(p.ancho)+” x “+fm(p.alto)+” cm”:(p.ancho!==”–”?“Ancho: “+fm(p.ancho)+” cm”:“Alto: “+fm(p.alto)+” cm”);
 var pz=(p.cant||1)*(p.reps||1);
-texto+=(i+1)+”. “+p.nombre+”\n   Medida: “+med+”\n   Material: “+p.mat+(p.color?” · “+p.color:””)+”\n   Piezas: “+pz+”\n\n”;
+texto+=(i+1)+”. “+p.nombre+”\n   Medida: “+med+”\n   Material: “+p.mat+(p.color?” \u00B7 “+p.color:””)+”\n   Piezas: “+pz+”\n\n”;
 });
 texto+=“Total: “+todos.reduce(function(s,p){return s+(p.cant||1)*(p.reps||1)},0)+” piezas\nGenerado con Carpincho”;
 if(navigator.share!==undefined){
@@ -755,13 +755,13 @@ navigator.share({title:titulo,text:texto}).catch(function(e){if(e.name!==“Abor
 }
 function copiarCB(t){
 if(navigator.clipboard&&window.isSecureContext){
-navigator.clipboard.writeText(t).then(function(){alert(“✓ Resumen copiado. Pegálo en WhatsApp, mail, etc.”)}).catch(function(){fbCopiar(t)});
+navigator.clipboard.writeText(t).then(function(){alert(”\u2713 Resumen copiado. Peg\u00E1lo en WhatsApp, mail, etc.”)}).catch(function(){fbCopiar(t)});
 } else {fbCopiar(t)}
 }
 function fbCopiar(t){
 var ta=document.createElement(“textarea”);ta.value=t;ta.style.position=“fixed”;ta.style.opacity=“0”;
 document.body.appendChild(ta);ta.select();
-try{document.execCommand(“copy”);alert(“✓ Resumen copiado al portapapeles.”);}
+try{document.execCommand(“copy”);alert(”\u2713 Resumen copiado al portapapeles.”);}
 catch(e){alert(“No se pudo copiar.\n\n”+t);}
 document.body.removeChild(ta);
 }
@@ -769,8 +769,8 @@ document.body.removeChild(ta);
 function descargarHTML(){
 var titulo=(document.getElementById(“rtit”)?.value||“Resumen Carpincho”).trim();
 var todos=res.flatMap(function(r){return r.items});
-if(!todos.length){alert(“El resumen está vacío. Guardá al menos un corte primero.”);return}
-var pu=res.filter(function(r){return r.tipo===“Puerta”}),ca=res.filter(function(r){return r.tipo===“Cajón”});
+if(!todos.length){alert(“El resumen est\u00E1 vac\u00EDo. Guard\u00E1 al menos un corte primero.”);return}
+var pu=res.filter(function(r){return r.tipo===“Puerta”}),ca=res.filter(function(r){return r.tipo===“Caj\u00F3n”});
 var tp=todos.reduce(function(s,p){return s+(p.cant||1)*(p.reps||1)},0);
 var fecha=new Date().toLocaleDateString(“es-AR”);
 function grpH(lista,tit,ic){
@@ -783,7 +783,7 @@ var ds=p.colorHex?“display:inline-block;width:10px;height:10px;border-radius:5
 return “<tr><td style='padding:8px 10px;color:#888;font-size:12px'>”+(n++)+”</td>”
 +”<td style='padding:8px 10px;font-weight:700;font-size:13px'>”+p.nombre+”</td>”
 +”<td style='padding:8px 10px;font-family:monospace;font-size:15px;font-weight:900;color:#1a3a70'>”+med+”</td>”
-+”<td style='padding:8px 10px;font-size:12px;color:#555'><span style='"+ds+"'></span>”+p.mat+(p.color?” · “+p.color:””)+”</td>”
++”<td style='padding:8px 10px;font-size:12px;color:#555'><span style='"+ds+"'></span>”+p.mat+(p.color?” \u00B7 “+p.color:””)+”</td>”
 +”<td style='padding:8px 10px;text-align:center'><span style='background:#2a5298;color:#fff;border-radius:20px;padding:2px 9px;font-size:12px;font-weight:800'>”+pz+” pz</span></td>”
 +”</tr>”;
 }).join(””);
@@ -795,12 +795,12 @@ var docHtml=”<!DOCTYPE html><html lang='es'><head><meta charset='UTF-8'><title
 +”<style>body{font-family:Barlow,sans-serif;padding:24px;max-width:760px;margin:0 auto;background:#f4f5f8;color:#1a2035}table tr:nth-child(even) td{background:#f8f9fc}@media print{body{background:#fff;padding:12px}}</style>”
 +”</head><body>”
 +”<div style='background:#1a3a70;border-radius:12px;padding:16px 22px;display:flex;justify-content:space-between;align-items:center;margin-bottom:20px'>”
-+”<div><div style='font-size:10px;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px'>Carpincho · “+fecha+”</div>”
++”<div><div style='font-size:10px;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px'>Carpincho \u00B7 “+fecha+”</div>”
 +”<div style='font-family:Barlow Condensed,sans-serif;font-size:1.6rem;font-weight:900;color:#e8b84b'>”+titulo+”</div></div>”
 +”<div style='font-family:Barlow Condensed,sans-serif;font-size:2rem;font-weight:900;color:#e8b84b;text-align:right'>”+tp+”<div style='font-size:.8rem;color:rgba(255,255,255,.5);font-weight:600'>piezas totales</div></div>”
 +”</div>”
 +grpH(pu,“PUERTAS”,”🚪”)+grpH(ca,“CAJONES”,”📦”)
-+”<div style='margin-top:24px;font-size:10px;color:#aaa;text-align:center;padding-top:12px;border-top:1px solid #dde2ed'>Generado con Carpincho · “+fecha+”</div>”
++”<div style='margin-top:24px;font-size:10px;color:#aaa;text-align:center;padding-top:12px;border-top:1px solid #dde2ed'>Generado con Carpincho \u00B7 “+fecha+”</div>”
 +”</body></html>”;
 try{
 var blob=new Blob([docHtml],{type:“text/html;charset=utf-8”});
@@ -809,7 +809,7 @@ var a=document.createElement(“a”);a.href=url;
 a.download=(titulo.replace(/[^a-z0-9]/gi,””).trim().replace(/ +/g,”_”)||“carpincho”)+”.html”;
 document.body.appendChild(a);a.click();
 setTimeout(function(){document.body.removeChild(a);URL.revokeObjectURL(url)},500);
-}catch(e){alert(“No se pudo descargar. Intentá desde otro navegador.”)}
+}catch(e){alert(“No se pudo descargar. Intent\u00E1 desde otro navegador.”)}
 }
 
 window.addEventListener(“DOMContentLoaded”,function(){
